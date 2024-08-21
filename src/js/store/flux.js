@@ -19,34 +19,63 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 
-			obteniendoPersonajes: () => {
-				fetch("https://www.swapi.tech/api/people")
-				.then((response) => response.json())
-				.then((data) => {
-					let uids = data.results.map(result => result.uid);
-					console.log(uids)
-					console.log(data.results)
-					setStore({characters: data.results, uidCharacter: uids})
-				})
-				.catch((error)=> console.log(error))
+			obteniendoPersonajes: async () => {
+				try{
+					let response = await fetch("https://www.swapi.tech/api/people/")
+					let data = await response.json()
+					let uids = await data.results.map(result => result.uid);
+					await setStore({characters: data.results, uidCharacter: uids})
+					return
+				}catch (error){
+					console.log(error)
+				}
 			},
 
-			detallePersonaje: () => {
+			// fetch("https://www.swapi.tech/api/people/")
+			// 	.then((response) => response.json())
+			// 	.then((data) => {
+			// 		let uids = data.results.map(result => result.uid);
+			// 		console.log(uids)
+			// 		console.log(data.results)
+			// 		setStore({characters: data.results, uidCharacter: uids})
+			// 	})
+			// 	.catch((error)=> console.log(error))
+			// },
+///////////////////////////
+			detallePersonaje: async () => {
+				const store = getStore();
+				const detailCharacter = [];
+			
+				try {
+					for (let i = 0; i < store.uidCharacter.length; i++) {
+						const id = store.uidCharacter[i];
+						const response = await fetch(`https://www.swapi.tech/api/people/${id}`);
+						const data = await response.json();
+						detailCharacter.push(data.result);
+					}
 				
-				const store = getStore()
-				console.log("hay contenido?", store.uidCharacter)
-				store.uidCharacter.map((id) =>{
-					fetch(`https://www.swapi.tech/api/people/${id}`)
-					.then((response) => response.json())
-					.then((data) =>{
-						console.log(data.result)
-						console.log("HOLA?")
-						setStore(currentData => currentData.concat({detailCharacter: data.result}))
-					})
-					.catch((error) => console.log(error))
-				})
-				
+					setStore({detailCharacter: detailCharacter });
+				} catch (error) {
+					console.log(error);
+				}
 			},
+
+			
+
+			//console.log("hay contenido?", store.uidCharacter)
+				// store.uidCharacter.map((id) =>{
+				// 	fetch(`https://www.swapi.tech/api/people/${id}`)
+				// 	.then((response) => response.json())
+				// 	.then((data) =>{
+				// 		console.log(data.result)
+				// 		console.log("HOLA?")
+				// 		setStore(currentData => currentData.concat({detailCharacter: data.result}))
+				// 		console.log(store.detailCharacter)
+				// 	})
+				// 	.catch((error) => console.log(error))
+				// })
+				
+			
 
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {

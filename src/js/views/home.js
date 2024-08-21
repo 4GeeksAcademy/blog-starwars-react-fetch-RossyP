@@ -19,7 +19,7 @@ export const Home = () => {
 		console.log(store.uidCharacter)
 	}, [store.uidCharacter])
 
-	//console.log(store.uidCharacter)
+	console.log(store.uidCharacter)
 
 	return(
 		<div className="text-center mt-5">
