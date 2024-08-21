@@ -12,9 +12,42 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			characters: [],
+			uidCharacter : [],
+			detailCharacter: [],
 		},
 		actions: {
+
+			obteniendoPersonajes: () => {
+				fetch("https://www.swapi.tech/api/people")
+				.then((response) => response.json())
+				.then((data) => {
+					let uids = data.results.map(result => result.uid);
+					console.log(uids)
+					console.log(data.results)
+					setStore({characters: data.results, uidCharacter: uids})
+				})
+				.catch((error)=> console.log(error))
+			},
+
+			detallePersonaje: () => {
+				
+				const store = getStore()
+				console.log("hay contenido?", store.uidCharacter)
+				store.uidCharacter.map((id) =>{
+					fetch(`https://www.swapi.tech/api/people/${id}`)
+					.then((response) => response.json())
+					.then((data) =>{
+						console.log(data.result)
+						console.log("HOLA?")
+						setStore(currentData => currentData.concat({detailCharacter: data.result}))
+					})
+					.catch((error) => console.log(error))
+				})
+				
+			},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
