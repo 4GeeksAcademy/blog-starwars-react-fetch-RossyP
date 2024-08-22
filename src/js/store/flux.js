@@ -16,6 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: [],
 			uidCharacter : [],
 			detailCharacter: [],
+			images: []
 		},
 		actions: {
 
@@ -60,6 +61,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			// obtenerImagen: (id) => {
+			// 	try{
+			// 		const response = await fetch(`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`)
+			// 		const data = await response.json()
+			// 		setStore({images: data})
+			// 	}catch (error){
+			// 		console.log(error)
+			// 	}
+			// }
 			
 
 			//console.log("hay contenido?", store.uidCharacter)

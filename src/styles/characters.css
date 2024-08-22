@@ -1,0 +1,17 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+.custom-arrow {
+    font-size: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .custom-left-arrow {
+    left: 10px;
+  }
+  
+  .custom-right-arrow {
+    right: 10px;
+  }
+  
