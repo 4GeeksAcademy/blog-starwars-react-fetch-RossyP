@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Characters } from "../component/characters.jsx";
 import { Characters2 } from "../component/characters2.jsx"
+import { Planets } from "../component/planets.jsx";
 
 export const Home = () => {
 
@@ -12,7 +13,7 @@ export const Home = () => {
 
 	useEffect(()=>{
 		actions.obteniendoPersonajes()
-		
+		actions.obteniendoPlanetas()
 	},[])
 
 	useEffect(()=>{
@@ -24,9 +25,13 @@ export const Home = () => {
 
 	return(
 		<div className="text-center mt-5">
-			<h1>Hola soy el Home</h1>
+			<h1>Characters</h1>
 			<Characters2 />
 
+			<h1>Planets</h1>
+			<Planets />
+
+			
 			<h2>DETALLE</h2>
 			{
 				store.detailCharacter.map((item) => (

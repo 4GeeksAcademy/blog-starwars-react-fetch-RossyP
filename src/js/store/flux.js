@@ -16,7 +16,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: [],
 			uidCharacter : [],
 			detailCharacter: [],
-			images: []
+			images: [],
+			planets:[],
+			uidPlanet:[],
+
 		},
 		actions: {
 
@@ -61,6 +64,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			obteniendoPlanetas: async () => {
+				const store = getStore();
+				
+				try{
+					const response = await fetch("https://www.swapi.tech/api/planets/")
+					const data = await response.json()
+					const uids = await data.results.map((result) => result.uid)
+					setStore({planets: data.results, uidPlanet: uids})
+					console.log(store.planets)
+					return
+				}catch (error){
+					console.log(error)
+				}
+			},
 			// obtenerImagen: (id) => {
 			// 	try{
 			// 		const response = await fetch(`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`)
