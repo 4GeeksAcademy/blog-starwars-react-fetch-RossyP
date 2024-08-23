@@ -16,9 +16,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: [],
 			uidCharacter : [],
 			detailCharacter: [],
-			images: [],
 			planets:[],
 			uidPlanet:[],
+			detailPlanet: [],
+			urlPlanet: [],
+			species:[],
+			uidSpecie:[],
 
 		},
 		actions: {
@@ -35,30 +38,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// fetch("https://www.swapi.tech/api/people/")
-			// 	.then((response) => response.json())
-			// 	.then((data) => {
-			// 		let uids = data.results.map(result => result.uid);
-			// 		console.log(uids)
-			// 		console.log(data.results)
-			// 		setStore({characters: data.results, uidCharacter: uids})
-			// 	})
-			// 	.catch((error)=> console.log(error))
-			// },
-///////////////////////////
-			detallePersonaje: async () => {
-				const store = getStore();
-				const detailCharacter = [];
+			detallePersonaje: async (id) => {
 			
 				try {
-					for (let i = 0; i < store.uidCharacter.length; i++) {
-						const id = store.uidCharacter[i];
-						const response = await fetch(`https://www.swapi.tech/api/people/${id}`);
-						const data = await response.json();
-						detailCharacter.push(data.result);
-					}
-				
-					setStore({detailCharacter: detailCharacter });
+					const response = await fetch(`https://www.swapi.tech/api/people/${id}`);
+					const data = await response.json()
+					setStore({detailCharacter: data.result });
 				} catch (error) {
 					console.log(error);
 				}
@@ -74,6 +59,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({planets: data.results, uidPlanet: uids})
 					console.log(store.planets)
 					return
+				}catch (error){
+					console.log(error)
+				}
+			},
+
+
+			detallePlanetas: async (id) => {
+
+				try{
+					const response = await fetch(`https://www.swapi.tech/api/planets/${id}`)
+					const data = await response.json()
+					console.log(data);
+					setStore({detailPlanet: data.result})
+				}catch (error){
+					console.log(error)
+				}
+			},
+
+			planetasPorURL: async (url) => {
+				try{
+					const response = await fetch(url)
+					const data = await response.json()
+					setStore({urlPlanet: data.result}) 
+				}catch (error) {
+					console.log(error)
+				}
+			},
+
+			obteniendoSpecies: async () => {
+				try{
+					const response = await fetch("https://www.swapi.tech/api/species")
+					const data = await response.json()
+					const uids = await data.results.map((result) => result.id)
+					setStore({species: data.results, uidSpecie: uids})
 				}catch (error){
 					console.log(error)
 				}

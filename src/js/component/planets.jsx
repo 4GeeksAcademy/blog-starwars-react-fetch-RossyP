@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 import { Context } from "../store/appContext";
 import noImage from "../../img/sinImage.png"
 import Carousel from 'react-multi-carousel';
@@ -7,12 +8,18 @@ import 'react-multi-carousel/lib/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import "../../styles/characters.css"
+import "../../styles/carousel.css"
 
 
 export const Planets = () => {
 
     const {store, actions} = useContext(Context)
+    const navigate = useNavigate()
+
+    const handleDetailsButton = (newId) => {
+        navigate(`/details/${newId}`)
+    }
+
 
     const CustomLeftArrow = ({ onClick }) => (
     <button className="custom-arrow custom-left-arrow position-absolute border-0 bg-transparent" onClick={onClick}>
@@ -56,6 +63,7 @@ export const Planets = () => {
                             <div>
                                 <img src={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`} onError={(e) => e.target.src = noImage} />
                                 <h1>{planet.name}</h1>
+                                <button type="button" className="btn btn-primary" onClick={() => handleDetailsButton(planet.uid)}>Primary</button>
                             </div>
                         ))
                     }

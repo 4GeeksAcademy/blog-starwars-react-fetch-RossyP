@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useContext } from "react";
+import { useParams, useNavigate } from "react-router";
 import { Context } from "../store/appContext";
 import sinImagen from "../../img/sinImagen.png"
 import Carousel from 'react-multi-carousel';
@@ -7,12 +8,16 @@ import 'react-multi-carousel/lib/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
-import "../../styles/characters.css"
+import "../../styles/carousel.css"
 
 export  const Characters2 = (props) => {
 
     const {store, actions} = useContext(Context)
+    const navigate = useNavigate()
 
+    const handleDetailsButton = (newId) => {
+        navigate(`/details/${newId}`)
+    }
 
     const CustomLeftArrow = ({ onClick }) => (
     <button className="custom-arrow custom-left-arrow position-absolute border-0 bg-transparent" onClick={onClick}>
@@ -55,6 +60,7 @@ export  const Characters2 = (props) => {
                             <div>
                                 <img src={`https://starwars-visualguide.com/assets/img/characters/${character.uid}.jpg`} />
                                 <h1>{character.name}</h1>
+                                <button type="button" className="btn btn-primary" onClick={() => handleDetailsButton(character.uid)}>Primary</button>
                             </div>
                         ))
                     }
