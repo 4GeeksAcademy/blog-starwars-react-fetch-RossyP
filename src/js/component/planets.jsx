@@ -17,7 +17,7 @@ export const Planets = () => {
     const navigate = useNavigate()
 
     const handleDetailsButton = (newId) => {
-        navigate(`/details/${newId}`)
+        navigate(`/details-planets/${newId}`)
     }
 
 

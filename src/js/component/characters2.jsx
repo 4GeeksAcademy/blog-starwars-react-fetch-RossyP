@@ -16,7 +16,7 @@ export  const Characters2 = (props) => {
     const navigate = useNavigate()
 
     const handleDetailsButton = (newId) => {
-        navigate(`/details/${newId}`)
+        navigate(`/details-characters/${newId}`)
     }
 
     const CustomLeftArrow = ({ onClick }) => (

@@ -1,5 +1,6 @@
 import React, {useContext} from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router";
 import noImage from "../../img/sinImage.png"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -13,6 +14,11 @@ import "../../styles/carousel.css"
 export const Species = () => {
 
     const {store, actions} = useContext(Context)
+    const navigate = useNavigate()
+    
+    const handleDetailsButton = (newId) => {
+        navigate(`/details-species/${newId}`)
+    }
 
     const CustomLeftArrow = ({ onClick }) => (
         <button className="custom-arrow custom-left-arrow position-absolute border-0 bg-transparent" onClick={onClick}>
@@ -54,6 +60,7 @@ export const Species = () => {
                         <div>
                             <img src={`https://starwars-visualguide.com/assets/img/species/${specie.uid}.jpg`} onError={(e) => e.target.src = noImage}/>
                             <h1>{specie.name}</h1>
+                            <button type="button" className="btn btn-primary" onClick={() => handleDetailsButton(specie.uid)}>Primary</button>
                         </div>
                     ))
                 }

@@ -1,3 +1,5 @@
+import { sync } from "remote-origin-url";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -16,13 +18,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			characters: [],
 			uidCharacter : [],
 			detailCharacter: [],
+			urlCharacters: [],
 			planets:[],
 			uidPlanet:[],
 			detailPlanet: [],
 			urlPlanet: [],
 			species:[],
 			uidSpecie:[],
-
+			detailSpecie: [],
+		
 		},
 		actions: {
 
@@ -46,6 +50,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({detailCharacter: data.result });
 				} catch (error) {
 					console.log(error);
+				}
+			},
+
+			personajePorURL: async (url) => {
+				try{
+					const response = await fetch(url)
+					const data = await response.json()
+					setStore({urlCharacters: data.result})
+				}catch (error){
+					console.log(error)
 				}
 			},
 
@@ -97,31 +111,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error)
 				}
 			},
-			// obtenerImagen: (id) => {
-			// 	try{
-			// 		const response = await fetch(`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`)
-			// 		const data = await response.json()
-			// 		setStore({images: data})
-			// 	}catch (error){
-			// 		console.log(error)
-			// 	}
-			// }
 			
-
-			//console.log("hay contenido?", store.uidCharacter)
-				// store.uidCharacter.map((id) =>{
-				// 	fetch(`https://www.swapi.tech/api/people/${id}`)
-				// 	.then((response) => response.json())
-				// 	.then((data) =>{
-				// 		console.log(data.result)
-				// 		console.log("HOLA?")
-				// 		setStore(currentData => currentData.concat({detailCharacter: data.result}))
-				// 		console.log(store.detailCharacter)
-				// 	})
-				// 	.catch((error) => console.log(error))
-				// })
-				
-			
+			detalleSpecies: async (id) => {
+				try{
+					const response = await fetch(`https://www.swapi.tech/api/species/${id}`)
+					const data = await response.json()
+					setStore({detailSpecie: data.result})
+				}catch (error) {
+					console.log(error)
+				}
+			},
 
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
