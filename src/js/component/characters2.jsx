@@ -53,19 +53,21 @@ export  const Characters2 = (props) => {
 
 
     return (
-            <div>
+        <div className="d-flex justify-content-center align-items-center" style={{backgroundColor: "transparent"}}>
+            <div className="w-75">
                 <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
                     {
                         store.characters.map((character)=>(
-                            <div>
-                                <img src={`https://starwars-visualguide.com/assets/img/characters/${character.uid}.jpg`} />
-                                <h1>{character.name}</h1>
-                                <button type="button" className="btn btn-primary" onClick={() => handleDetailsButton(character.uid)}>Primary</button>
+                            <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
+                                <img className="w-75 rounded-circle"  src={`https://starwars-visualguide.com/assets/img/characters/${character.uid}.jpg`} />
+                                <h3 className="text-white">{character.name}</h3>
+                                <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(character.uid)}>MORE</button>
                             </div>
                         ))
                     }
                 </Carousel>;
         
             </div>
+        </div>
     );          
 };

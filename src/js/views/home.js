@@ -26,14 +26,22 @@ export const Home = () => {
 	// console.log(store.uidCharacter)
 
 	return(
-		<div className="text-center mt-5">
-			<h1>CHARACTERS</h1>
+		<div className="fondo-home text-center mt-5" style={{backgroundColor:"#000000"}}>
+			<div className="w-100 d-flex justify-content-center align-items-center">
+				<h1 className="bg-warning w-75" style={{fontFamily: "Bungee Tint", borderRadius:"50px"}}>CHARACTERS</h1>
+			</div>
+			
 			<Characters2 />
-
-			<h1>PLANETS</h1>
+			<div className="w-100 d-flex justify-content-center align-items-center">
+				<h1 className="mt-5 mb-3 bg-warning w-75" style={{fontFamily: "Bungee Tint", borderRadius:"50px"}}>PLANETS</h1>
+			</div>
+			
 			<Planets />
 
-			<h1>SPECIES</h1>
+			<div className="w-100 d-flex justify-content-center align-items-center">
+				<h1 className="mt-5 mb-3 bg-warning w-75" style={{fontFamily: "Bungee Tint", borderRadius:"50px"}}>SPECIES</h1>
+			</div>
+			
 			<Species />
 
 		</div>

@@ -53,19 +53,20 @@ export const Species = () => {
     };
 
     return(
-        <div>
-            <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
-                {
-                    store.species.map((specie)=>(
-                        <div>
-                            <img src={`https://starwars-visualguide.com/assets/img/species/${specie.uid}.jpg`} onError={(e) => e.target.src = noImage}/>
-                            <h1>{specie.name}</h1>
-                            <button type="button" className="btn btn-primary" onClick={() => handleDetailsButton(specie.uid)}>Primary</button>
-                        </div>
-                    ))
-                }
-            </Carousel>;
-        
+        <div className="d-flex justify-content-center align-items-center" style={{backgroundColor: "transparent"}}>
+            <div className="w-75">
+                <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
+                    {
+                        store.species.map((specie)=>(
+                            <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
+                                <img className="w-75 rounded-circle" src={`https://starwars-visualguide.com/assets/img/species/${specie.uid}.jpg`} onError={(e) => e.target.src = noImage}/>
+                                <h3 className="text-white">{specie.name}</h3>
+                                <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(specie.uid)}>MORE</button>
+                            </div>
+                        ))
+                    }
+                </Carousel>;
+            </div>
         </div>
     )
 }

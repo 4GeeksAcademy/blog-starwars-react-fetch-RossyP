@@ -56,18 +56,20 @@ export const Planets = () => {
 
 
     return(
-        <div>
+        <div className="d-flex justify-content-center align-items-center" style={{backgroundColor: "transparent"}}>
+            <div className="w-75">
                 <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
                     {
                         store.planets.map((planet)=>(
-                            <div>
-                                <img src={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`} onError={(e) => e.target.src = noImage} />
-                                <h1>{planet.name}</h1>
-                                <button type="button" className="btn btn-primary" onClick={() => handleDetailsButton(planet.uid)}>Primary</button>
+                            <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
+                                <img className="w-75 rounded-circle" src={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`} onError={(e) => e.target.src = noImage} />
+                                <h3 className="text-white" >{planet.name}</h3>
+                                <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(planet.uid)}>MORE</button>
                             </div>
                         ))
                     }
                 </Carousel>;
+            </div>
         </div>
     )
 }
