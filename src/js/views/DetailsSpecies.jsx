@@ -29,9 +29,9 @@ export const DetailsSpecies = () => {
 
     return(
         <div className="card bg-transparent border-0 d-flex justify-content-center align-items-center vh-100"  style={{marginTop: "120px", marginBottom:"100px"}}>
-                <div className="row d-flex py-3 bg-warning" style={{width: "60%"}}>
+                <div className="row d-flex py-3 bg-warning" style={{width: "60%", borderRadius: "20px"}}>
                     <div className=" col-md-7 d-flex justify-content-center align-items-center">
-                        <img src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} onError={(e) => e.target.src = noImage} className="w-100"/> 
+                        <img src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} onError={(e) => e.target.src = noImage} className="w-100" style={{borderTopLeftRadius: "20px", borderBottomLeftRadius:"20px"}}/> 
                     </div>
                     <div className="col-md-5 d-flex flex-column justify-content-center align-items-start">
                         <div className="card-body">
