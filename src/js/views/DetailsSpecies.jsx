@@ -12,13 +12,18 @@ export const DetailsSpecies = () => {
         actions.detalleSpecies(id)
     },[])
 
-
+    let people =[]
     useEffect(() => {
         if (store.detailSpecie?.properties?.homeworld) {
-            actions.planetaPorURL(store.detailSpecie.properties.homeworld);
+            actions.planetasPorURL(store.detailSpecie.properties.homeworld);
         }
+
         if (store.detailSpecie?.properties?.people) {
-            actions.personajePorURL(store.detailSpecie.properties.people);
+            store.detailSpecie.properties.people.forEach((url)=>{
+                people.push(actions.personajePorURL(url))
+
+            })
+            
         }
     }, [store.detailSpecie, actions]);
     
