@@ -58,10 +58,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			personajePorURL: async (url) => {
+				const store = getStore()
 				try {
 					const response = await fetch(url);
 					const data = await response.json();
-					setStore({ urlCharacters: [...getStore().urlCharacters, data.result] });
+					setStore({ urlCharacters: [...store.urlCharacters, data.result] });
 				} catch (error) {
 					console.log(error);
 				}
