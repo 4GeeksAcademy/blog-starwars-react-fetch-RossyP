@@ -52,15 +52,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+            clearUrlCharacters: () => {
+                setStore({ urlCharacters: [] });
+            },
+
+
 			personajePorURL: async (url) => {
-				try{
-					const response = await fetch(url)
-					const data = await response.json()
-					setStore({urlCharacters: data.result})
-				}catch (error){
-					console.log(error)
+				try {
+					const response = await fetch(url);
+					const data = await response.json();
+					setStore({ urlCharacters: [...getStore().urlCharacters, data.result] });
+				} catch (error) {
+					console.log(error);
 				}
 			},
+
 
 			obteniendoPlanetas: async () => {
 				const store = getStore();

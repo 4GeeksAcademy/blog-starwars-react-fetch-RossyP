@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
+
+	const {store, actions} = useContext(Context)
+
+	// useEffect(()=>{
+	// 	actions.personajePorURL()
+	// },[])
+
 	return (
 		<nav className="navbar navbar-light" style={{backgroundColor: "#000000", height: "60px"}}>
 			<div className="p-1 ms-3">

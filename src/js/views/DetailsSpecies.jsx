@@ -9,29 +9,52 @@ export const DetailsSpecies = () => {
     const {id} = useParams()
     const [people, setPeople] = useState([])
 
+
     useEffect(()=>{
+        actions.clearUrlCharacters();
+        setPeople([]);
         actions.detalleSpecies(id)
-    },[])
+
+
+        return () => {
+            actions.clearUrlCharacters();
+        };
+    },[id])
 
     
+
     useEffect(() => {
-           if (store.detailSpecie?.properties?.homeworld) {
-                actions.planetasPorURL(store.detailSpecie.properties.homeworld);
-            }
+        if (store.detailSpecie?.properties?.homeworld) {
+            actions.planetasPorURL(store.detailSpecie.properties.homeworld);
+        }
 
-            if (store.detailSpecie?.properties?.people) {
-                actions.personajePorURL(store.detailSpecie.properties.people);
-            }
+        if (store.detailSpecie?.properties?.people) {
+            actions.clearUrlCharacters();
+            store.detailSpecie.properties.people.forEach(url => {
+                actions.personajePorURL(url);
+            });
+        }
+
+    }, [store.detailSpecie]);
+
+    useEffect(() => {
+        if (store.urlCharacters.length > 0) {
+            setPeople(store.urlCharacters);
+        }
+    }, [store.urlCharacters]);
+
+
     
-    }, [store.detailSpecie, actions]);
-
+    console.log('Datos en store.characters:', store.characters);
+    console.log('Datos en store.urlCharacters:', store.urlCharacters);
     console.log(store.personajePorURL?.properties?.name)
 
+    console.log(people)
     return(
         <div className="card bg-transparent border-0 d-flex justify-content-center align-items-center vh-100"  style={{marginTop: "120px", marginBottom:"100px"}}>
                 <div className="row d-flex py-3 bg-warning" style={{width: "60%", borderRadius: "20px"}}>
                     <div className=" col-md-7 d-flex justify-content-center align-items-center">
-                        <img src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} onError={(e) => e.target.src = noImage} className="w-100" style={{borderTopLeftRadius: "20px", borderBottomLeftRadius:"20px"}}/> 
+                        <img src={`https://starwars-visualguide.com/assets/img/species/${id}.jpg`} onError={(e) => e.target.src = noImage} className="w-100" style={{borderTopLeftRadius: "20px", borderBottomLeftRadius:"20px"}}/> 
                     </div>
                     <div className="col-md-5 d-flex flex-column justify-content-center align-items-start">
                         <div className="card-body">
@@ -47,12 +70,16 @@ export const DetailsSpecies = () => {
                             <p className="text"><span className="textCategory fw-bold">Homeworld:</span> {store.urlPlanet?.properties?.name}</p>
 
                             <p className="text"><span className="textCategory fw-bold">Language:</span> {store.detailCharacter?.properties?.language}</p>
-                            <p className="text">
-                                <span className="textCategory fw-bold">People: </span>
-                                {store.personajePorURL && store.personajePorURL.map((personaje, index) => (
-                                    <span key={index}>{personaje.properties.name}</span>
-                                ))}
-                            </p>
+                        <p className="text">
+                            <span className="textCategory fw-bold">People: </span>
+                            {people.length > 0 ? (
+                                people.map((personaje, index) => (
+                                    <div key={index}>{personaje.properties.name}</div>
+                                ))
+                            ) : (
+                                <span>No characters found</span>
+                            )}
+                        </p>
                         </div>
                         
                     </div>
