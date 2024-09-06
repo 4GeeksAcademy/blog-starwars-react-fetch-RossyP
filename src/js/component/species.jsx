@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router";
 import noImage from "../../img/sinImage.png"
@@ -16,6 +16,16 @@ export const Species = () => {
     const {store, actions} = useContext(Context)
     const navigate = useNavigate()
     
+
+    useEffect(() => {
+        const todasLasEspecies = async () => {
+            await actions.todasLasEspecies();
+        };
+
+        todasLasEspecies();
+    }, []);
+
+
     const handleDetailsButton = (newId) => {
         navigate(`/details-species/${newId}`)
     }
@@ -57,7 +67,7 @@ export const Species = () => {
             <div className="w-75">
                 <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
                     {
-                        store.species.map((specie)=>(
+                        store.allSpecies.map((specie)=>(
                             <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
                                 <img className="w-75 rounded-circle" src={`https://starwars-visualguide.com/assets/img/species/${specie.uid}.jpg`} onError={(e) => e.target.src = noImage}/>
                                 <h3 className="text-white">{specie.name}</h3>

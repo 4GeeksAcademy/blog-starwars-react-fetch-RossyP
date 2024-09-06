@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Context } from "../store/appContext";
 import noImage from "../../img/sinImage.png"
@@ -15,6 +15,16 @@ export const Planets = () => {
 
     const {store, actions} = useContext(Context)
     const navigate = useNavigate()
+
+
+    useEffect(() => {
+        const todosLosPlanetas = async () => {
+            await actions.todosLosPlanetas();
+        };
+
+        todosLosPlanetas();
+    }, []);
+
 
     const handleDetailsButton = (newId) => {
         navigate(`/details-planets/${newId}`)
@@ -60,7 +70,7 @@ export const Planets = () => {
             <div className="w-75">
                 <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
                     {
-                        store.planets.map((planet)=>(
+                        store.allPlanets.map((planet)=>(
                             <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
                                 <img className="w-75 rounded-circle" src={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`} onError={(e) => e.target.src = noImage} />
                                 <h3 className="text-white" >{planet.name}</h3>

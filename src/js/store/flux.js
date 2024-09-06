@@ -25,9 +25,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			species:[],
 			uidSpecie:[],
 			detailSpecie: [],
+			allCharacters: [],
+			allSpecies: [],
+			allPlanets: []
 		
 		},
 		actions: {
+
+			todosLosPersonajes: async () => {
+				const store = getStore();
+				let allCharacters = [];
+				let nextUrl = 'https://www.swapi.tech/api/people/';
+		
+				while (nextUrl) {
+					const response = await fetch(nextUrl);
+					const data = await response.json();
+					allCharacters = [...allCharacters, ...data.results];
+					nextUrl = data.next;
+				}
+		
+				setStore({ allCharacters: allCharacters });
+			},
 
 			obteniendoPersonajes: async () => {
 				try{
@@ -68,6 +86,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			todosLosPlanetas: async () => {
+				const store = getStore();
+				let allPlanets = [];
+				let nextUrl = 'https://www.swapi.tech/api/people/';
+		
+				while (nextUrl) {
+					const response = await fetch(nextUrl);
+					const data = await response.json();
+					allPlanets = [...allPlanets, ...data.results];
+					nextUrl = data.next;
+				}
+		
+				setStore({ allPlanets: allPlanets });
+			},
 
 			obteniendoPlanetas: async () => {
 				const store = getStore();
@@ -106,6 +138,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error)
 				}
 			},
+
+			todasLasEspecies: async () => {
+				const store = getStore();
+				let allSpecies = [];
+				let nextUrl = 'https://www.swapi.tech/api/people/';
+		
+				while (nextUrl) {
+					const response = await fetch(nextUrl);
+					const data = await response.json();
+					allSpecies = [...allSpecies, ...data.results];
+					nextUrl = data.next;
+				}
+		
+				setStore({ allSpecies: allSpecies });
+			},
+
 
 			obteniendoSpecies: async () => {
 				try{

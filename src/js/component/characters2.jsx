@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Context } from "../store/appContext";
@@ -14,6 +14,16 @@ export  const Characters2 = (props) => {
 
     const {store, actions} = useContext(Context)
     const navigate = useNavigate()
+
+    
+    useEffect(() => {
+        const todosLosPersonajes = async () => {
+            await actions.todosLosPersonajes();
+        };
+
+        todosLosPersonajes();
+    }, []);
+
 
     const handleDetailsButton = (newId) => {
         navigate(`/details-characters/${newId}`)
@@ -57,7 +67,7 @@ export  const Characters2 = (props) => {
             <div className="w-75">
                 <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
                     {
-                        store.characters.map((character)=>(
+                        store.allCharacters.map((character)=>(
                             <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
                                 <img className="w-75 rounded-circle"  src={`https://starwars-visualguide.com/assets/img/characters/${character.uid}.jpg`} />
                                 <h3 className="text-white">{character.name}</h3>
