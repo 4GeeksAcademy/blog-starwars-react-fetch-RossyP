@@ -8,6 +8,8 @@ import 'react-multi-carousel/lib/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+
 import "../../styles/carousel.css"
 
 
@@ -28,6 +30,11 @@ export const Planets = () => {
 
     const handleDetailsButton = (newId) => {
         navigate(`/details-planets/${newId}`)
+    }
+
+    const handleFavorite = (fav) => {
+        actions.agregandoFavoritos(fav)
+        console.log(store.favorites)
     }
 
 
@@ -71,10 +78,13 @@ export const Planets = () => {
                 <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
                     {
                         store.allPlanets.map((planet)=>(
-                            <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
+                            <div key={planet.uid} className="w-100" style={{fontFamily:"Barlow Condensed"}}>
                                 <img className="w-75 rounded-circle" src={`https://starwars-visualguide.com/assets/img/planets/${planet.uid}.jpg`} onError={(e) => e.target.src = noImage} />
                                 <h3 className="text-white" >{planet.name}</h3>
-                                <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(planet.uid)}>MORE</button>
+                                <div className="d-flex gap-2 justify-content-center align-items-center">
+                                    <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(planet.uid)}>MORE</button>
+                                    <button type="button" class="btn btn-outline-warning" onClick={()=> handleFavorite(planet.name)}><FontAwesomeIcon icon={faHeart} /></button> 
+                                </div>
                             </div>
                         ))
                     }

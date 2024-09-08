@@ -27,7 +27,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			detailSpecie: [],
 			allCharacters: [],
 			allSpecies: [],
-			allPlanets: []
+			allPlanets: [],
+			favorites:[],
 		
 		},
 		actions: {
@@ -89,7 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			todosLosPlanetas: async () => {
 				const store = getStore();
 				let allPlanets = [];
-				let nextUrl = 'https://www.swapi.tech/api/people/';
+				let nextUrl = 'https://www.swapi.tech/api/planets/';
 		
 				while (nextUrl) {
 					const response = await fetch(nextUrl);
@@ -142,7 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			todasLasEspecies: async () => {
 				const store = getStore();
 				let allSpecies = [];
-				let nextUrl = 'https://www.swapi.tech/api/people/';
+				let nextUrl = 'https://www.swapi.tech/api/species/';
 		
 				while (nextUrl) {
 					const response = await fetch(nextUrl);
@@ -174,6 +175,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}catch (error) {
 					console.log(error)
 				}
+			},
+
+			agregandoFavoritos: (item) =>{
+				const store = getStore()
+				if(!store.favorites.includes(item)){
+					setStore({favorites: [...store.favorites,item]})
+				}
+			},
+
+			eliminandoFavorito: (item) => {
+				const store = getStore()
+				const favoriteFilter = store.favorites.filter((i) => i !== item);
+				setStore({favorites: favoriteFilter})
 			},
 
 			// Use getActions to call a function within a fuction

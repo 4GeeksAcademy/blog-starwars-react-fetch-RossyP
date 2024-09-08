@@ -8,25 +8,32 @@ import 'react-multi-carousel/lib/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import "../../styles/carousel.css"
 
 export  const Characters2 = (props) => {
 
     const {store, actions} = useContext(Context)
     const navigate = useNavigate()
+    const [itemFavorite, setItemFavorite] = useState()
 
     
     useEffect(() => {
         const todosLosPersonajes = async () => {
             await actions.todosLosPersonajes();
         };
-
+        
         todosLosPersonajes();
     }, []);
 
 
     const handleDetailsButton = (newId) => {
         navigate(`/details-characters/${newId}`)
+    }
+
+    const handleFavorite = (fav) => {
+        actions.agregandoFavoritos(fav)
+        console.log(store.favorites)
     }
 
     const CustomLeftArrow = ({ onClick }) => (
@@ -68,10 +75,14 @@ export  const Characters2 = (props) => {
                 <Carousel responsive={responsive} customLeftArrow={<CustomLeftArrow />} customRightArrow={<CustomRightArrow />}>
                     {
                         store.allCharacters.map((character)=>(
-                            <div className="w-100" style={{fontFamily:"Barlow Condensed"}}>
+                            <div key={character.uid} className="w-100" style={{fontFamily:"Barlow Condensed"}}>
                                 <img className="w-75 rounded-circle"  src={`https://starwars-visualguide.com/assets/img/characters/${character.uid}.jpg`} />
                                 <h3 className="text-white">{character.name}</h3>
-                                <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(character.uid)}>MORE</button>
+                                <div className="d-flex gap-2 justify-content-center align-items-center">
+                                    <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(character.uid)}>MORE</button>
+                                    <button type="button" class="btn btn-outline-warning" onClick={()=> handleFavorite(character.name)}><FontAwesomeIcon icon={faHeart} /></button> 
+                                </div>
+                                
                             </div>
                         ))
                     }
