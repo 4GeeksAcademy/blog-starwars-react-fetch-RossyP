@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router";
 import noImage from "../../img/sinImage.png"
@@ -17,6 +17,8 @@ export const Species = () => {
 
     const {store, actions} = useContext(Context)
     const navigate = useNavigate()
+    const [clickFavorites, setClickFavorites] = useState([])
+
     
 
     useEffect(() => {
@@ -33,8 +35,14 @@ export const Species = () => {
     }
 
     const handleFavorite = (fav) => {
-        actions.agregandoFavoritos(fav)
-        console.log(store.favorites)
+        
+        if(clickFavorites.includes(fav)){
+            actions.eliminandoFavorito(fav)
+            setClickFavorites(prevState => prevState.filter(item => item !== fav))
+        }else{
+            actions.agregandoFavoritos(fav)
+            setClickFavorites(prevState => [...prevState, fav])
+        }
     }
 
 
@@ -81,7 +89,7 @@ export const Species = () => {
                                 <h3 className="text-white">{specie.name}</h3>
                                 <div className="d-flex gap-2 justify-content-center align-items-center">
                                     <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(specie.uid)}>MORE</button>
-                                    <button type="button" class="btn btn-outline-warning" onClick={()=> handleFavorite(specie.name)}><FontAwesomeIcon icon={faHeart} /></button> 
+                                    <button type="button" className={clickFavorites.includes(specie.name) ? "btn btn-warning" : "btn btn-outline-warning"} onClick={()=> handleFavorite(specie.name)}><FontAwesomeIcon icon={faHeart} /></button> 
                                 </div>
                             </div>
                         ))

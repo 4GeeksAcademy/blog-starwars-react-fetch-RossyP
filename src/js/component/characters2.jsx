@@ -15,8 +15,9 @@ export  const Characters2 = (props) => {
 
     const {store, actions} = useContext(Context)
     const navigate = useNavigate()
-    const [itemFavorite, setItemFavorite] = useState()
-
+    //const [itemFavorite, setItemFavorite] = useState()
+    //const [isClick, setIsClick] = useState(false)
+    const [clickFavorites, setClickFavorites] = useState([])
     
     useEffect(() => {
         const todosLosPersonajes = async () => {
@@ -32,10 +33,17 @@ export  const Characters2 = (props) => {
     }
 
     const handleFavorite = (fav) => {
-        actions.agregandoFavoritos(fav)
-        console.log(store.favorites)
+
+        if(clickFavorites.includes(fav)){
+            actions.eliminandoFavorito(fav)
+            setClickFavorites(prevState => prevState.filter(item => item !== fav))
+        }else{
+            actions.agregandoFavoritos(fav)
+            setClickFavorites(prevState => [...prevState, fav])
+        }
     }
 
+    
     const CustomLeftArrow = ({ onClick }) => (
     <button className="custom-arrow custom-left-arrow position-absolute border-0 bg-transparent" onClick={onClick}>
         <FontAwesomeIcon icon={faCaretLeft} className="text-danger"/>
@@ -80,7 +88,7 @@ export  const Characters2 = (props) => {
                                 <h3 className="text-white">{character.name}</h3>
                                 <div className="d-flex gap-2 justify-content-center align-items-center">
                                     <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(character.uid)}>MORE</button>
-                                    <button type="button" class="btn btn-outline-warning" onClick={()=> handleFavorite(character.name)}><FontAwesomeIcon icon={faHeart} /></button> 
+                                    <button type="button" className={clickFavorites.includes(character.name) ? "btn btn-warning" : "btn btn-outline-warning"} onClick={()=> handleFavorite(character.name)}><FontAwesomeIcon icon={faHeart} /></button> 
                                 </div>
                                 
                             </div>

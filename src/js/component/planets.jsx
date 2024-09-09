@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Context } from "../store/appContext";
 import noImage from "../../img/sinImage.png"
@@ -17,6 +17,8 @@ export const Planets = () => {
 
     const {store, actions} = useContext(Context)
     const navigate = useNavigate()
+    const [clickFavorites, setClickFavorites] = useState([])
+
 
 
     useEffect(() => {
@@ -33,8 +35,14 @@ export const Planets = () => {
     }
 
     const handleFavorite = (fav) => {
-        actions.agregandoFavoritos(fav)
-        console.log(store.favorites)
+        
+        if(clickFavorites.includes(fav)){
+            actions.eliminandoFavorito(fav)
+            setClickFavorites(prevState => prevState.filter(item => item !== fav))
+        }else{
+            actions.agregandoFavoritos(fav)
+            setClickFavorites(prevState => [...prevState, fav])
+        }
     }
 
 
@@ -83,7 +91,7 @@ export const Planets = () => {
                                 <h3 className="text-white" >{planet.name}</h3>
                                 <div className="d-flex gap-2 justify-content-center align-items-center">
                                     <button type="button" className="btn bg-danger text-warning" onClick={() => handleDetailsButton(planet.uid)}>MORE</button>
-                                    <button type="button" class="btn btn-outline-warning" onClick={()=> handleFavorite(planet.name)}><FontAwesomeIcon icon={faHeart} /></button> 
+                                    <button type="button" className={clickFavorites.includes(planet.name) ? "btn btn-warning" : "btn btn-outline-warning"} onClick={()=> handleFavorite(planet.name)}><FontAwesomeIcon icon={faHeart} /></button> 
                                 </div>
                             </div>
                         ))
